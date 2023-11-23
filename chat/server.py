@@ -17,11 +17,10 @@ logging.basicConfig(level=logging.INFO)
 #             result = r.json()
 #             return result
 #         else:
-#             return "Не вийшло в мене взнати курс. Приват не відповідає :)"
+#             return "No data"
 
 # async def get_exchange():
 #     response = await request(f'https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5')
-#     # переробить на більш придатний результат
 #     return str(response)
 
 
