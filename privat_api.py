@@ -21,7 +21,7 @@ async def request(url: str):
 
 
 
-async def get_exchange(nums_of_days: int, exch: str=None):
+async def get_exchange(nums_of_days: int, spec_exch: str=None):
     nums_of_days = int(nums_of_days)
     exchange_rates = []
     
@@ -37,13 +37,25 @@ async def get_exchange(nums_of_days: int, exch: str=None):
         if result:
             rates = result.get("exchangeRate")
             currency_data = {}
-            for exch in ['EUR', 'USD']:
-                exc, = list(filter(lambda element: element["currency"] == exch, rates))
+            
+            if spec_exch is not None:
                 
-                currency_data.update([(exch, {
+                exc, = list(filter(lambda element: element["currency"] == spec_exch, rates))
+                
+                currency_data.update([(spec_exch, {
                     "sale": round(exc["saleRateNB"], 1), 
                     "purchase": round(exc["purchaseRateNB"], 1)
                 })])
+                    
+            else:
+                for exch in ['EUR', 'USD']:
+                    exc, = list(filter(lambda element: element["currency"] == exch, rates))
+                    
+                    currency_data.update([(exch, {
+                        "sale": round(exc["saleRateNB"], 1), 
+                        "purchase": round(exc["purchaseRateNB"], 1)
+                    })])
+                    
             exchange_rates.append({shift: currency_data})
             
             
@@ -58,9 +70,15 @@ async def main():
     else:
         results = []
         
-        rates = await get_exchange(sys.argv[1])
-        #rates_exch = await get_exchange(sys.argv[1], sys.argv[2])
-        results.extend(rates)
+        if len(sys.argv) == 2:
+            print("Exchange by default is:")
+            rates = await get_exchange(sys.argv[1])
+            results.extend(rates)
+            
+        elif len(sys.argv) == 3:
+            print("Specific exchange is:")
+            rates = await get_exchange(sys.argv[1], sys.argv[2])
+            results.extend(rates)
             
         print(results)
     
