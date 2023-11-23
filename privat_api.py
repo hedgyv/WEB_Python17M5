@@ -26,9 +26,8 @@ async def get_exchange(nums_of_days: int, spec_exch: str=None):
     exchange_rates = []
     
     
-    for num in range(nums_of_days):
-        #for exch in ['EUR', 'USD']:
-        
+    for num in range(nums_of_days):   
+                  
         dl = datetime.now() - timedelta(num)
         shift = dl.strftime("%d.%m.%Y")
         
@@ -38,23 +37,18 @@ async def get_exchange(nums_of_days: int, spec_exch: str=None):
             rates = result.get("exchangeRate")
             currency_data = {}
             
-            if spec_exch is not None:
-                
-                exc, = list(filter(lambda element: element["currency"] == spec_exch, rates))
-                
-                currency_data.update([(spec_exch, {
-                    "sale": round(exc["saleRateNB"], 1), 
-                    "purchase": round(exc["purchaseRateNB"], 1)
-                })])
-                    
-            else:
-                for exch in ['EUR', 'USD']:
-                    exc, = list(filter(lambda element: element["currency"] == exch, rates))
-                    
-                    currency_data.update([(exch, {
-                        "sale": round(exc["saleRateNB"], 1), 
+            for exch in ['EUR', 'USD']:
+                if spec_exch is not None:
+                    currency = spec_exch
+                else:
+                    currency = exch
+
+                exc = next((element for element in rates if element["currency"] == currency), None)
+                if exc:
+                    currency_data[currency] = {
+                        "sale": round(exc["saleRateNB"], 1),
                         "purchase": round(exc["purchaseRateNB"], 1)
-                    })])
+                    }
                     
             exchange_rates.append({shift: currency_data})
             

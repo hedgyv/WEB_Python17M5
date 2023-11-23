@@ -11,22 +11,6 @@ from datetime import datetime
 
 logging.basicConfig(level=logging.INFO)
 
-
-# async def request(url: str) -> dict | str:
-#     async with httpx.AsyncClient() as client:
-#         r = await client.get(url)
-#         if r.status_code == 200:
-#             result = r.json()
-#             return result
-#         else:
-#             return "No data"
-
-# async def get_exchange():
-#     response = await request(f'https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5')
-#     return str(response)
-
-
-
 async def get_exchange():
     
     async with aiohttp.ClientSession() as session:

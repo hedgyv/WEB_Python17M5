@@ -1,0 +1,31 @@
+            # # # # # if spec_exch is not None:
+                
+            # # # # #     exc, = list(filter(lambda element: element["currency"] == spec_exch, rates))
+                
+            # # # # #     currency_data.update([(spec_exch, {
+            # # # # #         "sale": round(exc["saleRateNB"], 1), 
+            # # # # #         "purchase": round(exc["purchaseRateNB"], 1)
+            # # # # #     })])
+                    
+            # # # # # else:
+            # # # # #     for exch in ['EUR', 'USD']:
+            # # # # #         exc, = list(filter(lambda element: element["currency"] == exch, rates))
+                    
+            # # # # #         currency_data.update([(exch, {
+            # # # # #             "sale": round(exc["saleRateNB"], 1), 
+            # # # # #             "purchase": round(exc["purchaseRateNB"], 1)
+            # # # # #         })])
+
+
+            # async def request(url: str) -> dict | str:
+            #     async with httpx.AsyncClient() as client:
+            #         r = await client.get(url)
+            #         if r.status_code == 200:
+            #             result = r.json()
+            #             return result
+            #         else:
+            #             return "No data"
+
+            # async def get_exchange():
+            #     response = await request(f'https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5')
+            #     return str(response)
