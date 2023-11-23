@@ -51,16 +51,18 @@ async def get_exchange(nums_of_days: int, exch: str=None):
         
 
 async def main():
-    if len(sys.argv) > 10:
-        print("Usage: python privat_api.py <number_of_days>")
+    if int(sys.argv[1]) > 10:
+        print("Require max 10 days")
         return
-    results = []
     
-    rates = await get_exchange(sys.argv[1])
-    #rates_exch = await get_exchange(sys.argv[1], sys.argv[2])
-    results.extend(rates)
+    else:
+        results = []
         
-    print(results)
+        rates = await get_exchange(sys.argv[1])
+        #rates_exch = await get_exchange(sys.argv[1], sys.argv[2])
+        results.extend(rates)
+            
+        print(results)
     
 if __name__ == "__main__":
     asyncio.run(main())

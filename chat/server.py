@@ -4,8 +4,10 @@ import websockets
 import names
 import aiohttp
 import httpx
+import aiofile
 from websockets import WebSocketServerProtocol
 from websockets.exceptions import ConnectionClosedOK
+from datetime import datetime
 
 logging.basicConfig(level=logging.INFO)
 
@@ -69,10 +71,18 @@ class Server:
             pass
         finally:
             await self.unregister(ws)
+            
+    
 
     async def distrubute(self, ws: WebSocketServerProtocol):
         async for message in ws:
             if message == 'exchange':
+                log_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                log_message = f"{message.title()} was required at [{log_time}] \n"
+    
+                async with aiofile.async_open('log_file.txt', 'a') as afp:
+                    await afp.write(log_message)
+                
                 m = await get_exchange()
                 await self.send_to_clients(m)
             else:    
