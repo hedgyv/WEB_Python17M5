@@ -56,8 +56,6 @@ async def main():
         return
     results = []
     
-    print(sys.argv)
-    
     rates = await get_exchange(sys.argv[1])
     #rates_exch = await get_exchange(sys.argv[1], sys.argv[2])
     results.extend(rates)
