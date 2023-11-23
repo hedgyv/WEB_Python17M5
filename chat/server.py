@@ -37,7 +37,7 @@ async def get_exchange():
                     print(exc)
                     currency_data.update([(exch, {
                     "sale": exc["sale"], 
-                    "purchase": exc["buy"]
+                    "buy": exc["buy"]
                 })])
                 
                 print(str(currency_data))    
